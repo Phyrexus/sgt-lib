@@ -2,6 +2,8 @@
 
 #include "HexMap.hpp"
 
+using namespace hexmap;
+
 namespace tests
 {
     TEST_CASE("HexMapTests")
@@ -11,7 +13,7 @@ namespace tests
 
         SECTION("Create HexMap")
         {
-            hexmap::hex_set map = hexmap::CreateFTRVMap(MAP_WIDTH, MAP_HEIGHT);
+            hex_set map = CreateFTRVMap(MAP_WIDTH, MAP_HEIGHT);
 
             REQUIRE(map.size() == 80);
         }

@@ -7,10 +7,10 @@
 
 namespace hexmap
 {
-    using uint = unsigned int;
     using hex_set = std::unordered_set<Hex>;
 
-    hex_set CreateFTRVMap(uint width, uint height);
+    // Create flat-topped, rectangular, vertical hex map
+    hex_set CreateFTRVMap(int width, int height);
 }
 
 #endif

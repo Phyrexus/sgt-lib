@@ -12,6 +12,7 @@ namespace swngmtool
 
     const uint STD_MAP_WIDTH = 8U;
     const uint STD_MAP_HEIGHT = 10U;
+    const uint MIN_STAR_MOD = 20U;
 
     struct Planet
     {
@@ -32,6 +33,7 @@ namespace swngmtool
             void GenerateSector(uint width, uint height);
 
             std::size_t GetMapSize() const;
+            std::size_t GetSystemListSize() const;
 
         private:
             hexmap::hex_set sectormap_;

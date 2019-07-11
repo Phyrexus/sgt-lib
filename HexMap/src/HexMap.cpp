@@ -4,7 +4,7 @@
 
 namespace hexmap
 {
-    hex_set CreateFTRVMap(uint width, uint height)
+    hex_set CreateFTRVMap(int width, int height)
     {
         hex_set hexmap;
 

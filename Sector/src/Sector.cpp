@@ -13,9 +13,9 @@ namespace swngmtool
     {
         sectormap_ = hexmap::CreateFTRVMap(width, height);
 
-        std::uniform_int_distribution<int> star_dist {1, 10};
+        std::uniform_int_distribution<int> star_dist {MIN_STAR_MOD, MIN_STAR_MOD + 10};
 
-        int total_stars = star_dist(prng() ) + 20;
+        int total_stars = star_dist(prng() );
 
         for(int i = 0; i < total_stars; i++)
         {
@@ -24,8 +24,8 @@ namespace swngmtool
             
             int q_offset = std::floor( (q+1)/2);
             
-            std::uniform_int_distribution<int> r_dist {0, int(height)};
-            int r = r_dist(prng() ) - q_offset;
+            std::uniform_int_distribution<int> r_dist {-q_offset, int(height) - q_offset};
+            int r = r_dist(prng() );
 
             auto hex = sectormap_.find(hexmap::Hex(q, r) );
 
@@ -50,5 +50,10 @@ namespace swngmtool
     std::size_t Sector::GetMapSize() const
     {
         return sectormap_.size();
+    }
+
+    std::size_t Sector::GetSystemListSize() const
+    {
+        return systemlist_.size();
     }
 }

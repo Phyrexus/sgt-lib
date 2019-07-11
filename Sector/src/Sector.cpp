@@ -6,6 +6,11 @@ namespace swngmtool
 {
     Sector::Sector(uint width, uint height)
     {
+        this->GenerateSector(width, height);
+    }
+
+    void Sector::GenerateSector(uint width, uint height)
+    {
         sectormap_ = hexmap::CreateFTRVMap(width, height);
 
         std::uniform_int_distribution<int> star_dist {1, 10};
@@ -30,7 +35,6 @@ namespace swngmtool
             }
         }
 
-        /*
         for(auto system : systemlist_)
         {
             std::uniform_int_distribution<int> planet_dist {1, 4};
@@ -38,10 +42,9 @@ namespace swngmtool
 
             for(int i = 0; i < planets; i++)
             {
-                system.Planets.push_back(Planet() );
+                system.planetlist_.push_back(Planet() );
             }
         }
-        */
     }
 
     std::size_t Sector::GetMapSize() const

@@ -13,9 +13,14 @@ namespace swngmtool
     const uint STD_MAP_WIDTH = 8U;
     const uint STD_MAP_HEIGHT = 10U;
 
+    struct Planet
+    {
+    };
+
     struct System
     {
         hexmap::Hex hex_;
+        std::vector<Planet> planetlist_;
     };
 
     class Sector
@@ -23,6 +28,8 @@ namespace swngmtool
         public:
             Sector(uint width = STD_MAP_WIDTH, uint height = STD_MAP_HEIGHT);
             ~Sector() = default;
+
+            void GenerateSector(uint width, uint height);
 
             std::size_t GetMapSize() const;
 

@@ -3,7 +3,7 @@
 
 #include <random>
 
-namespace swngmtool
+namespace util
 {
     // Psuedo-random number generator function
     inline std::mt19937& prng()

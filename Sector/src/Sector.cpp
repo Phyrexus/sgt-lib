@@ -1,8 +1,10 @@
 #include "Sector.hpp"
 
+#include <stdexcept>
+
 #include "Random.hpp"
 
-namespace swngmtool
+namespace sgt
 {
     Sector::Sector(uint width, uint height)
     {
@@ -13,36 +15,39 @@ namespace swngmtool
     {
         sectormap_ = hexmap::CreateFTRVMap(width, height);
 
-        std::uniform_int_distribution<int> star_dist {MIN_STAR_MOD, MIN_STAR_MOD + 10};
+        std::uniform_int_distribution<int> star_dist {MIN_STAR_MOD + 1, MIN_STAR_MOD + 11};
 
-        int total_stars = star_dist(prng() );
+        int total_stars = star_dist(util::prng() );
 
         for(int i = 0; i < total_stars; i++)
         {
-            std::uniform_int_distribution<int> q_dist {0, int(width)};   
-            int q = q_dist(prng() );
+            std::uniform_int_distribution<int> q_dist {0, int(width) - 1};   
+            int q = q_dist(util::prng() );
             
             int q_offset = std::floor( (q+1)/2);
             
-            std::uniform_int_distribution<int> r_dist {-q_offset, int(height) - q_offset};
-            int r = r_dist(prng() );
+            std::uniform_int_distribution<int> r_dist {-q_offset, int(height) - q_offset - 1};
+            int r = r_dist(util::prng() );
 
-            auto hex = sectormap_.find(hexmap::Hex(q, r) );
+            auto hex = sectormap_.find(hexmap::Hex(q, r, -q-r) );
 
-            if(hex != sectormap_.end() )
+            if(hex == sectormap_.end() )
             {
-                systemlist_.push_back(System { *hex } );
+                // If the hex is not found, there's an issue with the random distributions
+                throw new std::domain_error("Hex not in map");
             }
+            
+            systemlist_.push_back(System { *hex } );
         }
 
         for(auto system : systemlist_)
         {
             std::uniform_int_distribution<int> planet_dist {1, 4};
-            int planets = planet_dist(prng() );
+            int planets = planet_dist(util::prng() );
 
             for(int i = 0; i < planets; i++)
             {
-                system.planetlist_.push_back(Planet() );
+                system.planetlist.push_back(Planet() );
             }
         }
     }

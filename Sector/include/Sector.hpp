@@ -1,12 +1,13 @@
 #ifndef SECTOR_HPP
 #define SECTOR_HPP
 
+#include <string>
 #include <vector>
 
 #include "Hex.hpp"
 #include "HexMap.hpp"
 
-namespace swngmtool
+namespace sgt
 {
     using uint = unsigned int;
 
@@ -16,12 +17,14 @@ namespace swngmtool
 
     struct Planet
     {
+        std::string name;
     };
 
     struct System
     {
-        hexmap::Hex hex_;
-        std::vector<Planet> planetlist_;
+        hexmap::Hex hex;
+        std::string name;
+        std::vector<Planet> planetlist;
     };
 
     class Sector

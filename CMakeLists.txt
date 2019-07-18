@@ -15,13 +15,13 @@ include_directories(${PROJECT_SOURCE_DIR}/include/spdlog)
 include_directories(${PROJECT_SOURCE_DIR}/Faction/include)
 add_subdirectory(Faction)
 
-# HexGrid
+# HexMap
 include_directories(${PROJECT_SOURCE_DIR}/HexMap/include)
 add_subdirectory(HexMap)
 
-# Sector
-include_directories(${PROJECT_SOURCE_DIR}/Sector/include)
-add_subdirectory(Sector)
+# MapRegion
+include_directories(${PROJECT_SOURCE_DIR}/MapRegion/include)
+add_subdirectory(MapRegion)
 
 # Urils
 include_directories(${PROJECT_SOURCE_DIR}/Utils/include)
@@ -30,7 +30,7 @@ include_directories(${PROJECT_SOURCE_DIR}/Utils/include)
 include_directories(${PROJECT_SOURCE_DIR}/Tests/include)
 add_subdirectory(Tests)
 
-set(LIBS Faction HexMap Sector)
+set(LIBS Faction HexMap MapRegion)
 
 add_library(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} ${LIBS})

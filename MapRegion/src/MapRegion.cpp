@@ -1,4 +1,4 @@
-#include "Sector.hpp"
+#include "MapRegion.hpp"
 
 #include <stdexcept>
 
@@ -6,14 +6,19 @@
 
 namespace sgt
 {
-    Sector::Sector(uint width, uint height)
+    MapRegion::MapRegion(size_t width, size_t height)
+        : width_(width), height_(height)
     {
-        this->GenerateSector(width, height);
+        this->GenerateRegion();
     }
 
-    void Sector::GenerateSector(uint width, uint height)
+    MapRegion::~MapRegion()
     {
-        sectormap_ = hexmap::CreateFTRVMap(width, height);
+    }
+
+    void MapRegion::GenerateRegion()
+    {
+        map_ = hexmap::CreateFTRVMap(width_, height_);
 
         std::uniform_int_distribution<int> star_dist {MIN_STAR_MOD + 1, MIN_STAR_MOD + 11};
 
@@ -21,17 +26,17 @@ namespace sgt
 
         for(int i = 0; i < total_stars; i++)
         {
-            std::uniform_int_distribution<int> q_dist {0, int(width) - 1};   
+            std::uniform_int_distribution<int> q_dist {0, int(width_) - 1};   
             int q = q_dist(util::prng() );
             
             int q_offset = std::floor( (q+1)/2);
             
-            std::uniform_int_distribution<int> r_dist {-q_offset, int(height) - q_offset - 1};
+            std::uniform_int_distribution<int> r_dist {-q_offset, int(height_) - q_offset - 1};
             int r = r_dist(util::prng() );
 
-            auto hex = sectormap_.find(hexmap::Hex(q, r, -q-r) );
+            auto hex = map_.find(hexmap::Hex(q, r, -q-r) );
 
-            if(hex == sectormap_.end() )
+            if(hex == map_.end() )
             {
                 // If the hex is not found, there's an issue with the random distributions
                 throw new std::domain_error("Hex not in map");
@@ -47,17 +52,23 @@ namespace sgt
 
             for(int i = 0; i < planets; i++)
             {
-                system.planetlist.push_back(Planet() );
+                system.feature_list.push_back(Planet() );
             }
         }
     }
 
-    std::size_t Sector::GetMapSize() const
+    void MapRegion::Clear()
     {
-        return sectormap_.size();
+        width_ = height_ = 0;
+        map_.clear();
     }
 
-    std::size_t Sector::GetSystemListSize() const
+    std::size_t MapRegion::GetMapSize() const
+    {
+        return map_.size();
+    }
+
+    std::size_t MapRegion::GetSystemListSize() const
     {
         return systemlist_.size();
     }

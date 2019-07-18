@@ -1,6 +1,7 @@
 #ifndef FACTION_HPP
 #define FACTION_HPP
 
+#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -15,9 +16,12 @@ namespace sgt
     {
         public:
             Faction(std::string name);
-            ~Faction() = default;
+            ~Faction();
+
+            void AddAsset(Asset& asset);
 
             inline std::string GetName() const { return name_; }
+            inline std::size_t GetAssetCount() const { return assetlist_.size(); }
 
         private:
             std::string name_;

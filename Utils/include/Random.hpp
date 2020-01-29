@@ -6,12 +6,7 @@
 namespace util
 {
     // Psuedo-random number generator function
-    inline std::mt19937& prng()
-    {
-        thread_local std::random_device rd;
-        thread_local std::mt19937 mt(rd() );
-        return mt;
-    }
+    std::mt19937& prng();
 }
 
 #endif // RANDOM_HPP

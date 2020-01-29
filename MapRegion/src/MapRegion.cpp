@@ -6,7 +6,7 @@
 
 namespace sgt
 {
-    MapRegion::MapRegion(size_t width, size_t height)
+    MapRegion::MapRegion(int width, int height)
         : width_(width), height_(height)
     {
         this->GenerateRegion();
@@ -20,11 +20,11 @@ namespace sgt
     {
         map_ = hexmap::CreateFTRVMap(width_, height_);
 
-        std::uniform_int_distribution<int> star_dist {MIN_STAR_MOD + 1, MIN_STAR_MOD + 11};
+        std::uniform_int_distribution<int> hex_dist {MIN_STAR_MOD + 1, MIN_STAR_MOD + 11};
 
-        int total_stars = star_dist(util::prng() );
+        int total_hexes = hex_dist(util::prng() );
 
-        for(int i = 0; i < total_stars; i++)
+        for(int i = 0; i < total_hexes; i++)
         {
             std::uniform_int_distribution<int> q_dist {0, int(width_) - 1};   
             int q = q_dist(util::prng() );
@@ -42,17 +42,17 @@ namespace sgt
                 throw new std::domain_error("Hex not in map");
             }
             
-            systemlist_.push_back(System { *hex } );
+            hexes_.push_back(MapHex { *hex } );
         }
 
-        for(auto system : systemlist_)
+        for(auto hex : hexes_)
         {
-            std::uniform_int_distribution<int> planet_dist {1, 4};
-            int planets = planet_dist(util::prng() );
+            std::uniform_int_distribution<int> dist {1, 4};
+            int num_features = dist(util::prng() );
 
-            for(int i = 0; i < planets; i++)
+            for(int i = 0; i < num_features; i++)
             {
-                system.feature_list.push_back(Planet() );
+                hex.feature_list.push_back(Feature{} );
             }
         }
     }
@@ -68,8 +68,8 @@ namespace sgt
         return map_.size();
     }
 
-    std::size_t MapRegion::GetSystemListSize() const
+    std::size_t MapRegion::GetHexListSize() const
     {
-        return systemlist_.size();
+        return hexes_.size();
     }
 }

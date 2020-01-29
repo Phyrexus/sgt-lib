@@ -20,7 +20,7 @@ namespace sgt
 
             void AddAsset(Asset& asset);
 
-            inline std::string GetName() const { return name_; }
+            inline const std::string& GetName() const { return name_; }
             inline std::size_t GetAssetCount() const { return assetlist_.size(); }
 
         private:

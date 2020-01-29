@@ -1,3 +1,6 @@
-set(SOURCES src/Hex.cpp src/HexMap.cpp)
-
-add_library(HexMap ${SOURCES})
+set(SOURCES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Hex.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/HexMap.cpp
+    ${SOURCES}
+    PARENT_SCOPE
+)

@@ -1,3 +1,5 @@
-set(SOURCES src/Faction.cpp)
-
-add_library(Faction ${SOURCES})
+set(SOURCES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Faction.cpp
+    ${SOURCES}
+    PARENT_SCOPE
+)

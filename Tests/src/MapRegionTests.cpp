@@ -16,8 +16,8 @@ namespace tests
 
             SECTION("Check generated region")
             {
-                REQUIRE(region.GetSystemListSize() > MIN_STAR_MOD);
-                REQUIRE(region.GetSystemListSize() <= STD_MAP_WIDTH * STD_MAP_HEIGHT);
+                REQUIRE(region.GetHexListSize() > MIN_STAR_MOD);
+                REQUIRE(region.GetHexListSize() <= STD_MAP_WIDTH * STD_MAP_HEIGHT);
             }
         }
     }

@@ -1,6 +1,7 @@
 #ifndef HEX_HPP
 #define HEX_HPP
 
+#include <cstddef>
 #include <functional>
 
 namespace hexmap

@@ -1,36 +1,26 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_NAME sgt)
-project(${PROJECT_NAME} LANGUAGES CXX)
+project(sgt LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
-# Check for required external libs
-include_directories(${PROJECT_SOURCE_DIR}/include/catch)
-include_directories(${PROJECT_SOURCE_DIR}/include/cereal)
-include_directories(${PROJECT_SOURCE_DIR}/include/fmt)
-include_directories(${PROJECT_SOURCE_DIR}/include/spdlog)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-# Faction
+find_package(catch)
+include_directories(${catch_INCLUDE_DIR})
+
+# Includes
 include_directories(${PROJECT_SOURCE_DIR}/Faction/include)
-add_subdirectory(Faction)
-
-# HexMap
 include_directories(${PROJECT_SOURCE_DIR}/HexMap/include)
-add_subdirectory(HexMap)
-
-# MapRegion
 include_directories(${PROJECT_SOURCE_DIR}/MapRegion/include)
-add_subdirectory(MapRegion)
-
-# Urils
 include_directories(${PROJECT_SOURCE_DIR}/Utils/include)
-
-# Tests
 include_directories(${PROJECT_SOURCE_DIR}/Tests/include)
+
+# Subdirectories
+add_subdirectory(Faction)
+add_subdirectory(HexMap)
+add_subdirectory(MapRegion)
+add_subdirectory(Utils)
 add_subdirectory(Tests)
 
-set(LIBS Faction HexMap MapRegion)
-
-add_library(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} ${LIBS})
+add_library(${PROJECT_NAME} SHARED ${SOURCES})

@@ -1,0 +1,5 @@
+set(SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Random.cpp
+    ${SOURCES}
+    PARENT_SCOPE
+)
